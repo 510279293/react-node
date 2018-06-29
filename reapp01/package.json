@@ -1,0 +1,27 @@
+{
+  "name": "reapp01",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.6.2",
+    "axios": "^0.18.0",
+    "react": "^16.4.0",
+    "react-axios": "^2.0.0",
+    "react-dom": "^16.4.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.8.0",
+    "react-app-rewire-less": "^2.1.1",
+    "react-app-rewired": "^1.5.2"
+  },
+  "proxy":"http://127.0.0.1:8000"
+}

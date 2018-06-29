@@ -1,0 +1,25 @@
+.login-box{
+  width:500px;
+  margin:auto;
+  padding-top:300px;
+  background:#e5e5e5;
+  box-sizing: border-box;
+  padding:30px; 
+  border-radius: 6px;
+}
+.login-form{
+  width:100%;
+  max-width: 666px;
+  margin: 0 auto;
+}
+.login-title{
+  text-align: center;  
+  font-size:16px;
+  padding-bottom:20px;
+}
+.login-form-button{
+  width:100%;  
+}
+.login-form-toregister{
+  float:right;  
+}
