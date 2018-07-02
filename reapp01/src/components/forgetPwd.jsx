@@ -7,18 +7,42 @@ import '../style/login.css'
 
 const FormItem = Form.Item
 class NormalLoginForm  extends React.Component {
+  state = {
+    confirmDirty: false,
+    autoCompleteResult: [],
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err,values) => {
       if(!err){
-        if(values.userName&&values.userPassword){
-          userApi.getUserList().then(res =>{
+        console.log(values)
+        if(values.phone&&values.userPassword){
+          userApi.userUpdatePwd({phone:values.phone,password:values.userPassword}).then(res =>{
             console.log(res)
           })
           // this.props.history.push('/home')
         }
       }
     })
+  }
+  handleConfirmBlur = (e) => {
+    const value = e.target.value;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  }
+  validateToNextPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['userConfirmPwd'], { force: true });
+    }
+    callback();
+  }
+  compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('userPassword')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
   }
 
   render(){
@@ -38,7 +62,7 @@ class NormalLoginForm  extends React.Component {
             <div className="login-title">忘记密码</div>
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
-                  {getFieldDecorator('userName',{
+                  {getFieldDecorator('phone',{
                   rules:[{required:true,message:'请输入手机号'}],
                   })(
                   <Input prefix={<Icon type="user" style={{color:'rgba(0,0,0,.25)'}} />} placeholder="手机号" />
@@ -46,16 +70,16 @@ class NormalLoginForm  extends React.Component {
               </FormItem>
               <FormItem>
                   {getFieldDecorator('userPassword',{
-                  rules:[{required:true,message:'请输入密码'}],
+                  rules:[{required:true,message:'请输入密码'},{validator: this.validateToNextPassword,}],
                   })(
                   <Input type="password" prefix={<Icon type="lock" style={{color:'rgba(0,0,0,.25)'}} />} placeholder="密码" />
                   )}
               </FormItem>
               <FormItem>
                   {getFieldDecorator('userConfirmPwd',{
-                  rules:[{required:true,message:'请再次输入密码'}],
+                  rules:[{required:true,message:'请再次输入密码'},{validator: this.compareToFirstPassword,}],
                   })(
-                  <Input type="password" prefix={<Icon type="lock" style={{color:'rgba(0,0,0,.25)'}} />} placeholder="确认密码" />
+                  <Input type="password" prefix={<Icon type="lock" style={{color:'rgba(0,0,0,.25)'}} />} placeholder="确认密码" onBlur={this.handleConfirmBlur} />
                   )}
               </FormItem>
               <FormItem
