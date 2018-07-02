@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, Row, Col, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { browserHistory } from 'react-router'
 import userApi from '../api/userAPI'
@@ -11,6 +11,9 @@ class NormalLoginForm  extends React.Component {
     confirmDirty: false,
     autoCompleteResult: [],
   };
+  showMessage (flag,msg){
+    flag?message.success(msg):message.error(msg)
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err,values) => {
@@ -18,7 +21,12 @@ class NormalLoginForm  extends React.Component {
         console.log(values)
         if(values.phone&&values.userPassword){
           userApi.userUpdatePwd({phone:values.phone,password:values.userPassword}).then(res =>{
-            console.log(res)
+            if(res.data.code == 0){
+              this.showMessage(true,res.data.message)
+              this.props.history.push('/')
+            }else{
+              this.showMessage(false,res.data.message)
+            }
           })
           // this.props.history.push('/home')
         }
@@ -106,8 +114,8 @@ class NormalLoginForm  extends React.Component {
                   <Checkbox>记住密码</Checkbox>
                   )}          
                   <Button type="primary" htmlType="submit" className="login-form-button">确定</Button>
-                  <Link to="/"><a className="login-form-forgot" href="">登录</a></Link>
-                  <Link to="/register"><a href="" className="login-form-toregister">去注册</a></Link>
+                  <Link to="/"><b className="login-form-forgot" >登录</b></Link>
+                  <Link to="/register"><b className="login-form-toregister">去注册</b></Link>
               </FormItem>
             </Form>
         </div>

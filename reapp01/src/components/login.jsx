@@ -57,8 +57,8 @@ class NormalLoginForm  extends React.Component {
                   <Checkbox>记住密码</Checkbox>
                   )}          
                   <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
-                  <Link to="/forgetPwd"><a className="login-form-forgot" href="">忘记密码</a></Link>
-                  <Link to="/register"><a href="" className="login-form-toregister">去注册</a></Link>
+                  <Link to="/forgetPwd"><b className="login-form-forgot" >忘记密码</b></Link>
+                  <Link to="/register"><b  className="login-form-toregister">去注册</b></Link>
               </FormItem>
             </Form>
         </div>

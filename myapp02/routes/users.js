@@ -64,13 +64,29 @@ router.post('/login',function(req,res,next){
   })
 })
 //忘记密码
-router.post('updatePwd',function(req,res,next){
+router.post('/updatePwd',function(req,res,next){
   res.header('Access-Control-Allow-Origin','*');
   var reqData = req.body
   var updatePwdSql = 'update user set password = ? where phone = ?'
   var sqlData = [reqData.password,reqData.phone]
-  db.query(updatePwdSql,sqlData,function(err,rows){
-    console.log(rows)
+  var resData = {code:0,data:[],message:''}
+  db.query('select * from user where phone = '+reqData.phone,function(err,rows){
+    if(rows.length == 1){
+      db.query(updatePwdSql,sqlData,function(err,rows){
+        if(!err){
+          resData.message = '修改密码成功'
+          res.json(resData)
+        }else{
+          resData.code = -1
+          resData.message = '修改密码失败'
+          res.json(resData)
+        }
+      })
+    }else{
+      resData.code = -1
+      resData.message = '查无此号码'
+      res.json(resData)
+    }
   })
 
 })

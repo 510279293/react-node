@@ -196,8 +196,8 @@ class RegistrationForm extends React.Component {
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">注册</Button>
-                <Link to='/forgetPwd'><a className="login-form-forgot" href="">忘记密码</a></Link>
-                <Link to="/"><a href="" className="login-form-toregister">去登录</a></Link>
+                <Link to='/forgetPwd'><b className="login-form-forgot">忘记密码</b></Link>
+                <Link to="/"><b className="login-form-toregister">去登录</b></Link>
                 </FormItem>
             </Form>
       </div>
